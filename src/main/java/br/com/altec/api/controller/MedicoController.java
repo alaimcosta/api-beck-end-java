@@ -4,6 +4,7 @@ import br.com.altec.api.medico.DadosCadastroMedicos;
 import br.com.altec.api.medico.Medico;
 import br.com.altec.api.medico.MedicoRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class MedicoController {
 
     @PostMapping
     @Transactional //transação ativa com o banco de dados
-    public void cadastrar(@RequestBody DadosCadastroMedicos dados) {
+    public void cadastrar(@RequestBody @Valid DadosCadastroMedicos dados) {
         repository.save(new Medico(dados));
 
     }
