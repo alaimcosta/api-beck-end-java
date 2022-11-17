@@ -28,7 +28,7 @@ public class MedicoController {
 
     @GetMapping                                                                                  //Apenas de leitura
     public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {                                //objeto do tipo Pageable do spring
-        return repository.findAll(paginacao).map(DadosListagemMedico::new);    //acessar o bando de dados e converter para uma Lista no final. | .map - faz o mapeamento
+        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);    //acessar o bando de dados e converter para uma Lista no final. | .map - faz o mapeamento
     }
 
     @PutMapping
@@ -39,6 +39,7 @@ public class MedicoController {
     }
 
     @DeleteMapping("/{id}") //parametro dinâmico /{}
+    @Transactional //transação com o BD
     public void excluir(@PathVariable Long id){        // @PathVariable para equivaler ao id passado como parametro
         var medico = repository.getReferenceById(id);    //primeiro carrega o objeto no banco de dados
         medico.excluir();
